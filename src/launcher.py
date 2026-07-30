@@ -14,7 +14,7 @@ class FF14TCLauncher:
     def login(self) -> str:
         otp = generate_otp(self.totp_secret)
         
-        # TODO: 根據實際 Fiddler/Charles 抓包結果調整 Endpoint 與 Payload
+        # API 模擬 Endpoint
         api_url = "https://api-ff14.userjoy.com/api/v1/auth/login"
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) FFXIV-TC-Launcher/1.0",
@@ -26,7 +26,7 @@ class FF14TCLauncher:
             "otp_code": otp
         }
         
-        # 實務連線範例:
+        # 實務連線示範
         # res = self.session.post(api_url, json=payload, headers=headers, timeout=10)
         # res.raise_for_status()
         # token = res.json().get("session_token")
