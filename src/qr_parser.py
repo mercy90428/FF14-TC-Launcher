@@ -83,13 +83,21 @@ def parse_qr_text(raw_text: str) -> str:
         raise ValueError("無法識別的 QR Code 格式")
 
 def extract_secret_from_image(image_path: str) -> str:
+    """傳入圖片路徑，自動讀取 QR Code 並解析出 Base32 Secret Key (支援中文路徑)"""
     detector = cv2.QRCodeDetector()
-    img = cv2.imread(image_path)
+    
+    # 解決 OpenCV cv2.imread 無法讀取中文/Unicode 路徑的問題
+    try:
+        img_array = np.fromfile(image_path, dtype=np.uint8)
+        img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
+    except Exception:
+        img = None
+
     if img is None:
-        raise FileNotFoundError("無法讀取圖片檔案，請確認路徑無誤")
+        raise FileNotFoundError("無法讀取圖片檔案，請確認路徑與檔案格式是否正確")
 
     val, pts, qr_code = detector.detectAndDecode(img)
     if not val:
-        raise ValueError("圖片中未偵測到有效的 QR Code 條碼")
+        raise ValueError("圖片中未偵測到有效的 QR Code 條碼，請確認圖片清晰度")
 
     return parse_qr_text(val)
