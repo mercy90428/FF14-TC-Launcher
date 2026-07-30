@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+
+# Build outputs
+build/
+dist/
+*.spec
+
+# User credentials
+credentials.bin
+*.log

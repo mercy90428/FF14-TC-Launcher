@@ -1,0 +1,4 @@
+pywin32>=306
+pyotp>=2.9.0
+requests>=2.31.0
+pyinstaller>=6.0.0
